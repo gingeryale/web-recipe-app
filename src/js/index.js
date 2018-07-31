@@ -1,5 +1,6 @@
 import Search from './models/Search';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
 import Recipe from './models/Recipe';
 
@@ -10,6 +11,7 @@ const state = {};
 // SEARCH Controller
 const controlSearch = async () => {
     // 1) Get query from view
+    recipeView.clearRecipe();
     const query = searchView.getInput();
     // TESTING
     //const query = 'pizza';
@@ -71,7 +73,7 @@ const controlRecipe = async () => {
     console.log(id);
     if(id){
         // prepare UI for change
-
+        renderLoader(elements.recipe);
         // create new recipe obj
         state.recipe = new Recipe(id);
         // TESTING
@@ -88,6 +90,8 @@ const controlRecipe = async () => {
 
             // render recipe
             console.log(state.recipe);
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
         }
        catch(err){
         alert('error porcessing recipe');
