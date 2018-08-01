@@ -12,6 +12,20 @@ export const clearResults = () => {
     elements.searchResPages.innerHTML = '';
 };
 
+
+export const highlightedSelection = id => {
+
+    const resultsArray = Array.from(document.querySelectorAll('.results__link'));
+
+    resultsArray.forEach(el => {
+        el.classList.remove('results__link--active');
+    });
+
+    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+}
+
+
+
 // 'string example with words'
 // 0 / acc + cur.length = 5 / newTitle Pasta
 // accumulator and current
