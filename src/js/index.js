@@ -4,10 +4,13 @@ import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
 import Recipe from './models/Recipe';
 import List from './models/List';
+import * as listView from './views/listView';
+
 
 // global state
 // search obj, Current Recipe Obj, Shopping list obj, liked recipes,
 const state = {};
+window.state = state;
 
 // SEARCH Controller
 const controlSearch = async () => {
@@ -108,6 +111,39 @@ const controlRecipe = async () => {
 // window.addEventListener('load', controlRecipe)
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
+
+//list controller
+
+const controlList = () => {
+    // create a list if none exist
+        if(!state.list) state.list = new List();
+    // add each ingredient to list and UI
+    state.recipe.ingredients.forEach(el => {
+        const item = state.list.addItem(el.count, el.unit, el.ingredient);
+        listView.renderItem(item);
+    });
+}
+
+// handle deleting from list items
+elements.shopping.addEventListener('click', e=>{
+    const id = e.target.closest('.shopping__item').dataset.itemid;
+
+    // handle delete
+    if(e.target.matches('.shopping__delete, .shopping__delete *')){
+        // delte from state
+        state.list.deleteItem(id);
+        // delete UI
+        listView.deleteItem(id);
+        // handle update count
+    } else if (e.target.matches('.shopping__count-value')){
+        const val = parseFloat(e.target.value, 10);
+        state.list.updateCount(id, val);
+    }
+})
+
+
+
+
 // attach e.lsitener and update
 elements.recipe.addEventListener('click', e => {
     if(e.target.matches('.btn-decrease, .btn-decrease *')) {
@@ -120,6 +156,8 @@ elements.recipe.addEventListener('click', e => {
         // increase
          state.recipe.updateServings('inc');
          recipeView.updateServingsIngredients(state.recipe);
+    } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')){
+        controlList();
     }
     //console.log(state.recipe);
 });
