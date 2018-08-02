@@ -3,6 +3,7 @@ import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
 import Recipe from './models/Recipe';
+import List from './models/List';
 
 // global state
 // search obj, Current Recipe Obj, Shopping list obj, liked recipes,
@@ -120,8 +121,13 @@ elements.recipe.addEventListener('click', e => {
          state.recipe.updateServings('inc');
          recipeView.updateServingsIngredients(state.recipe);
     }
-    console.log(state.recipe);
-})
+    //console.log(state.recipe);
+});
+
+// const l = new List();
+// window.l = l;
+
+window.l = new List();
 
 
 
