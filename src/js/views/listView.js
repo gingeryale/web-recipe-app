@@ -22,3 +22,7 @@ export const deleteItem = id => {
 	const item = document.querySelector(`[data-itemid="${id}"]`);
 	item.parentElement.removeChild(item);
 };
+
+export const clearListView = () =>{
+    elements.shopping.innerHTML= '';
+};

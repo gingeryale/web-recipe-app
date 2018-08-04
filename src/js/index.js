@@ -12,12 +12,14 @@ import * as listView from './views/listView';
 // global state
 // search obj, Current Recipe Obj, Shopping list obj, liked recipes,
 const state = {};
-window.state = state;
+
 
 // SEARCH Controller
 const controlSearch = async () => {
     // 1) Get query from view
     recipeView.clearRecipe();
+    listView.clearListView();
+    
     const query = searchView.getInput();
     // TESTING
     //const query = 'pizza';
@@ -222,8 +224,7 @@ elements.recipe.addEventListener('click', e => {
 
 // const l = new List();
 // window.l = l;
-
-window.l = new List();
+//window.l = new List();
 
 
 
